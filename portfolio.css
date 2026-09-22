@@ -1,11 +1,92 @@
 /* ==========================================================================
+   HOẠT ĐỘNG 1 & HOẠT ĐỘNG 4: DESIGN SYSTEM REFACTORING & BẢNG MÃ MÀU THÔNG MINH
+   - Trích xuất toàn bộ mã màu và khoảng cách (spacing) từ code "cứng" thành biến CSS tại :root.
+   - Xây dựng Design System đồng bộ, tái sử dụng cao cho toàn bộ Portfolio.
+   ========================================================================== */
+:root {
+  /* --------------------------------------------------------------------------
+      1. HỆ THỐNG MÀU SẮC (COLOR SYSTEM - HOẠT ĐỘNG 1 & 4)
+      -------------------------------------------------------------------------- */
+  /* Màu chủ đạo (Primary) & biến thể tương tác */
+  --primary: #2563eb;
+  /* Xanh dương hiện đại, chuyên nghiệp */
+  --primary-color: var(--primary);
+  --primary-hover: #1d4ed8;
+  /* Sắc thái đậm hơn khi hover */
+  --primary-light: #eff6ff;
+  /* Nền nhạt cho badge, hover state */
+
+  /* Màu phụ (Secondary) & biến thể tương tác */
+  --secondary: #8b5cf6;
+  /* Tím bổ trợ, tạo điểm nhấn tương phản */
+  --secondary-color: var(--secondary);
+  --secondary-hover: #7c3aed;
+
+  /* Màu nền tổng thể (Background) */
+  --bg: #f8fafc;
+  /* Nền sáng thanh lịch toàn trang web */
+  --bg-color: var(--bg);
+  --background: var(--bg);
+
+  /* Hệ thống 3 mức xám (3 Gray Levels) */
+  --gray-light: #ffffff;
+  /* Mức xám 1 (Nhạt / Trắng): Nền card, thẻ badge, màu text sáng */
+  --gray-1: var(--gray-light);
+
+  --gray-medium: #e2e8f0;
+  /* Mức xám 2 (Trung bình): Đường viền border, phân cách */
+  --gray-2: var(--gray-medium);
+
+  --gray-dark: #0f172a;
+  /* Mức xám 3 (Đậm / Tối): Màu chữ chính, nền Header & Footer */
+  --gray-3: var(--gray-dark);
+
+  /* Biến xám bổ trợ cho phụ đề (subtitle / muted text) */
+  --gray-muted: #64748b;
+
+  /* --------------------------------------------------------------------------
+      2. HỆ THỐNG KHOẢNG CÁCH (SPACING SYSTEM - HOẠT ĐỘNG 4)
+      -------------------------------------------------------------------------- */
+  --spacing-xs: 4px;
+  /* Khoảng cách siêu nhỏ (offset, gap nhỏ) */
+  --spacing-sm: 8px;
+  /* Khoảng cách nhỏ (menu gap, card micro-padding) */
+  --spacing-md: 12px;
+  /* Khoảng cách vừa (contact gap, bio margin) */
+  --spacing-base: 16px;
+  /* Khoảng cách cơ bản (padding card mobile, form gap) */
+  --spacing-lg: 20px;
+  /* Khoảng cách lớn (padding header, skill padding) */
+  --spacing-xl: 24px;
+  /* Khoảng cách rất lớn (grid gap, margin title) */
+  --spacing-2xl: 28px;
+  /* Khoảng cách khối (card padding lớn, gap các section) */
+  --spacing-3xl: 32px;
+  /* Padding header/desktop */
+  --spacing-4xl: 36px;
+  /* Padding container chính */
+
+  /* --------------------------------------------------------------------------
+      3. BO GÓC & ĐỔ BÓNG (BORDER RADIUS & BOX SHADOWS - HOẠT ĐỘNG 4)
+      -------------------------------------------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 10px rgba(37, 99, 235, 0.15);
+  --shadow-lg: 0 4px 14px rgba(37, 99, 235, 0.25);
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ==========================================================================
    1. RESET & BOX MODEL CHUẨN
    ========================================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* Giúp padding/border không làm tăng kích thước phần tử */
 }
 
 html {
@@ -14,18 +95,18 @@ html {
 
 body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  color: #334155;
-  background-color: #f8fafc;
+  color: var(--gray-dark);
+  background-color: var(--bg);
+  line-height: 1.6;
 }
 
 /* ==========================================================================
-   2. PROMPT 1: LAYOUT TỔNG THỂ DÙNG CSS GRID (grid-template-areas)
+   2. BỐ CỤC TỔNG THỂ DÙNG CSS GRID (grid-template-areas) - DESKTOP 2 CỘT
    ========================================================================== */
 .portfolio-layout {
   display: grid;
-  /* Sidebar cố định 250px, Main content chiếm phần còn lại (1fr) */
+  /* Bố cục Desktop: 2 CỘT gồm Sidebar 250px bên trái và Main content 1fr bên phải */
   grid-template-columns: 250px 1fr;
-  /* Header tự động theo nội dung, Main dãn hết màn hình, Footer tự động */
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header"
@@ -37,122 +118,89 @@ body {
 /* Gán các khu vực theo grid-template-areas */
 .header {
   grid-area: header;
-  background-color: #0f172a;
-  color: #ffffff;
-  padding: 20px 32px;
+  background-color: var(--gray-dark);
+  color: var(--gray-light);
+  padding: var(--spacing-lg) var(--spacing-3xl);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 3px solid #3b82f6;
+  border-bottom: 3px solid var(--primary);
+}
+
+.brand-title h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.header-status span {
+  display: inline-flex;
+  align-items: center;
+  color: var(--gray-light);
+  border: 1px solid var(--secondary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .sidebar {
   grid-area: sidebar;
-  background-color: #ffffff;
-  border-right: 1px solid #e2e8f0;
-  padding: 30px 20px;
+  background-color: var(--gray-light);
+  border-right: 1px solid var(--gray-medium);
+  padding: var(--spacing-3xl) var(--spacing-lg);
 }
 
 .main-content {
   grid-area: main;
-  background-color: #f8fafc;
-  padding: 36px 32px;
+  background-color: var(--bg);
+  padding: var(--spacing-4xl) var(--spacing-3xl);
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  /* Dùng khoảng cách hiện đại giữa các khối nội dung */
+  gap: var(--spacing-2xl);
 }
 
 .footer {
   grid-area: footer;
-  background-color: #1e293b;
-  color: #94a3b8;
+  background-color: var(--gray-dark);
+  color: var(--gray-medium);
   text-align: center;
-  padding: 16px;
+  padding: var(--spacing-lg);
   font-size: 0.9rem;
+  border-top: 1px solid var(--gray-medium);
 }
 
 /* ==========================================================================
-   3. PROMPT 2: KHU VỰC KỸ NĂNG DÙNG FLEXBOX (wrap, gap: 15px, căn giữa)
-   (TUYỆT ĐỐI KHÔNG DÙNG float: left)
-   ========================================================================== */
-.skills-container {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
-}
-
-.skills-title {
-  font-size: 1.3rem;
-  color: #0f172a;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Danh sách kỹ năng dùng Flexbox */
-.skills-list {
-  display: flex;
-  flex-wrap: wrap;
-  /* Tự động xuống dòng khi màn hình nhỏ */
-  gap: 15px;
-  /* Khoảng cách giữa các thẻ là 15px hiện đại */
-  justify-content: center;
-  /* Căn giữa các item */
-  align-items: center;
-}
-
-/* Từng thẻ kỹ năng (skill badge) */
-.skill-item {
-  background: #eff6ff;
-  color: #1d4ed8;
-  border: 1px solid #bfdbfe;
-  padding: 10px 20px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-
-.skill-item:hover {
-  background: #2563eb;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-}
-
-/* ==========================================================================
-   4. NỘI DUNG PHỤ TRỢ (SIDEBAR & BIO)
+   3. SIDEBAR: THÔNG TIN CÁ NHÂN & MENU ĐIỀU HƯỚNG
    ========================================================================== */
 .profile-avatar {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--gray-light);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2rem;
   font-weight: 700;
-  margin: 0 auto 16px;
+  margin: 0 auto var(--spacing-base);
+  box-shadow: var(--shadow-md);
 }
 
 .sidebar h3 {
   text-align: center;
-  color: #0f172a;
-  margin-bottom: 4px;
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-xs);
+  font-size: 1.15rem;
 }
 
 .sidebar .role {
   text-align: center;
-  color: #64748b;
+  color: var(--gray-muted);
   font-size: 0.85rem;
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-xl);
+  font-weight: 500;
 }
 
 .menu-links {
@@ -160,90 +208,223 @@ body {
 }
 
 .menu-links li {
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-sm);
 }
 
 .menu-links a {
   display: block;
   text-decoration: none;
-  color: #475569;
-  padding: 10px 14px;
-  border-radius: 8px;
+  color: var(--gray-dark);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
   font-weight: 500;
-  transition: background 0.2s;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .menu-links a:hover,
 .menu-links a.active {
-  background: #f1f5f9;
-  color: #2563eb;
-}
-
-.bio-card {
-  background: #ffffff;
-  padding: 28px;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  line-height: 1.7;
-}
-
-.bio-card h2 {
-  color: #0f172a;
-  margin-bottom: 12px;
+  background: var(--bg);
+  color: var(--primary);
+  transform: translateX(3px);
 }
 
 /* ==========================================================================
-   5. KHU VỰC LIÊN HỆ (CONTACT SECTION) - DÙNG CSS GRID VÀ FLEXBOX
+   4. PHẦN GIỚI THIỆU (BIO CARD)
+   ========================================================================== */
+.bio-card {
+  background: var(--gray-light);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+.bio-card h2 {
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+
+.bio-card p {
+  color: var(--gray-dark);
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.bio-card strong {
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   5. KHU VỰC KỸ NĂNG (SKILLS SECTION) - FLEXBOX
+   ========================================================================== */
+.skills-container {
+  background: var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-medium);
+}
+
+.skills-title {
+  font-size: 1.3rem;
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.skill-item {
+  background: var(--bg);
+  color: var(--primary);
+  border: 1px solid var(--gray-medium);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.skill-item:hover {
+  background: var(--primary);
+  color: var(--gray-light);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================================
+   6. HOẠT ĐỘNG 3: BREAKPOINT CHALLENGE - KHU VỰC DỊCH VỤ (SERVICES)
+   Yêu cầu: 4 cột Desktop -> 2 cột Tablet -> 1 cột Mobile dùng CSS Grid + Media Queries
+   ========================================================================== */
+.services-container {
+  background: var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-medium);
+}
+
+.services-title {
+  font-size: 1.3rem;
+  color: var(--gray-dark);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.services-subtitle {
+  text-align: center;
+  color: var(--gray-muted);
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Bố cục CSS Grid: 4 cột trên Desktop (Mặc định) */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.service-card {
+  background-color: var(--bg);
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg) var(--spacing-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-sm);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.service-icon {
+  font-size: 2.2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.service-name {
+  font-size: 1.05rem;
+  color: var(--gray-dark);
+  font-weight: 700;
+}
+
+.service-desc {
+  font-size: 0.88rem;
+  color: var(--gray-muted);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   7. KHU VỰC LIÊN HỆ (CONTACT SECTION) - DESKTOP 2 CỘT
    ========================================================================== */
 .contact-container {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  background: var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-medium);
 }
 
 .contact-title {
   font-size: 1.3rem;
-  color: #0f172a;
+  color: var(--gray-dark);
   text-align: center;
   margin-bottom: 6px;
 }
 
 .contact-subtitle {
   text-align: center;
-  color: #64748b;
+  color: var(--gray-muted);
   font-size: 0.95rem;
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-xl);
 }
 
-/* Bố cục Grid 2 cột: Cột 1 là danh sách thông tin, Cột 2 là form tin nhắn */
+/* Bố cục Grid 2 cột trên Desktop: Cột 1 thông tin, Cột 2 form tin nhắn */
 .contact-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: var(--spacing-xl);
 }
 
-/* Danh sách thẻ thông tin liên hệ dùng Flexbox */
 .contact-info-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--spacing-md);
 }
 
 .contact-card {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
+  gap: var(--spacing-base);
+  padding: var(--spacing-base) var(--spacing-lg);
+  background-color: var(--bg);
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--radius-md);
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .contact-card:hover {
-  border-color: #3b82f6;
+  border-color: var(--primary);
   transform: translateX(4px);
 }
 
@@ -252,78 +433,96 @@ body {
 }
 
 .contact-detail h4 {
-  font-size: 0.9rem;
-  color: #64748b;
+  font-size: 0.85rem;
+  color: var(--gray-muted);
   font-weight: 500;
   margin-bottom: 2px;
 }
 
 .contact-detail p {
-  font-size: 1rem;
-  color: #0f172a;
+  font-size: 0.95rem;
+  color: var(--gray-dark);
   font-weight: 600;
+  word-break: break-all;
 }
 
-/* Form liên hệ dùng Flexbox */
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--spacing-base);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--spacing-xs);
 }
 
 .form-group label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #334155;
+  color: var(--gray-dark);
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 10px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--gray-light);
+  color: var(--gray-dark);
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--radius-sm);
   font-family: inherit;
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
 }
 
 .btn-submit {
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--gray-light);
   border: none;
-  padding: 12px;
-  border-radius: 8px;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
-  margin-top: 4px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: var(--spacing-xs);
 }
 
 .btn-submit:hover {
-  background: #1d4ed8;
+  background-color: var(--primary-hover);
   transform: translateY(-1px);
 }
 
 /* ==========================================================================
-   6. RESPONSIVE CHO MÀN HÌNH DI ĐỘNG (<= 768px)
+   HOẠT ĐỘNG 3: MEDIA QUERY CHO TABLET (<= 1024px)
+   Yêu cầu: Dịch vụ chuyển từ 4 cột Desktop -> 2 cột Tablet
+   ========================================================================== */
+@media (max-width: 1024px) {
+  /* HĐ 3: Khu vực Dịch vụ hiển thị 2 cột trên Tablet */
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-base);
+  }
+}
+
+/* ==========================================================================
+   HOẠT ĐỘNG 2 & HOẠT ĐỘNG 3: MEDIA QUERY CHO MOBILE (< 768px)
+   - HĐ 2: Biến bố cục 2 cột Desktop thành 1 cột trên Mobile < 768px
+   - HĐ 3: Khu vực Dịch vụ chuyển từ 2 cột Tablet -> 1 cột Mobile
    ========================================================================== */
 @media (max-width: 768px) {
+  /* 1. HĐ 2: BỐ CỤC TỔNG THỂ: Biến 2 cột Desktop thành 1 cột */
   .portfolio-layout {
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
     grid-template-areas:
       "header"
       "sidebar"
@@ -331,13 +530,60 @@ body {
       "footer";
   }
 
-  .sidebar {
-    border-right: none;
-    border-bottom: 1px solid #e2e8f0;
+  /* 2. HEADER TRÊN MOBILE: Xếp dọc căn giữa */
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-base);
   }
 
-  /* Chuyển phần liên hệ thành 1 cột trên điện thoại */
+  /* 3. SIDEBAR TRÊN MOBILE: Chuyển menu thành hàng ngang */
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--gray-medium);
+    padding: var(--spacing-xl) var(--spacing-base);
+  }
+
+  .sidebar .menu-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .sidebar .menu-links li {
+    margin-bottom: 0;
+  }
+
+  .sidebar .menu-links a {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.9rem;
+  }
+
+  /* 4. MAIN CONTENT TRÊN MOBILE */
+  .main-content {
+    padding: var(--spacing-lg) var(--spacing-base);
+    gap: var(--spacing-lg);
+  }
+
+  /* 5. HĐ 3: KHU VỰC DỊCH VỤ: Chuyển thành 1 cột */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-base);
+  }
+
+  /* 6. HĐ 2: KHU VỰC LIÊN HỆ: Chuyển thành 1 cột */
   .contact-wrapper {
     grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  /* 7. TINH CHỈNH ĐỆM CARD */
+  .bio-card,
+  .skills-container,
+  .services-container,
+  .contact-container {
+    padding: var(--spacing-lg) var(--spacing-base);
   }
 }
