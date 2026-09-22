@@ -1,4 +1,3 @@
-# lhu
 🌐 <Tên dự án>
 
 Website <mô tả ngắn về dự án>, được xây dựng nhằm <mục tiêu chính của website>.
