@@ -5,8 +5,8 @@
    ========================================================================== */
 :root {
   /* --------------------------------------------------------------------------
-     1. HỆ THỐNG MÀU SẮC (COLOR SYSTEM - HOẠT ĐỘNG 1 & 4)
-     -------------------------------------------------------------------------- */
+      1. HỆ THỐNG MÀU SẮC (COLOR SYSTEM - HOẠT ĐỘNG 1 & 4)
+      -------------------------------------------------------------------------- */
   /* Màu chủ đạo (Primary) & biến thể tương tác */
   --primary: #2563eb;
   /* Xanh dương hiện đại, chuyên nghiệp */
@@ -45,8 +45,8 @@
   --gray-muted: #64748b;
 
   /* --------------------------------------------------------------------------
-     2. HỆ THỐNG KHOẢNG CÁCH (SPACING SYSTEM - HOẠT ĐỘNG 4)
-     -------------------------------------------------------------------------- */
+      2. HỆ THỐNG KHOẢNG CÁCH (SPACING SYSTEM - HOẠT ĐỘNG 4)
+      -------------------------------------------------------------------------- */
   --spacing-xs: 4px;
   /* Khoảng cách siêu nhỏ (offset, gap nhỏ) */
   --spacing-sm: 8px;
@@ -67,8 +67,8 @@
   /* Padding container chính */
 
   /* --------------------------------------------------------------------------
-     3. BO GÓC & ĐỔ BÓNG (BORDER RADIUS & BOX SHADOWS - HOẠT ĐỘNG 4)
-     -------------------------------------------------------------------------- */
+      3. BO GÓC & ĐỔ BÓNG (BORDER RADIUS & BOX SHADOWS - HOẠT ĐỘNG 4)
+      -------------------------------------------------------------------------- */
   --radius-sm: 8px;
   --radius-md: 10px;
   --radius-lg: 12px;
@@ -506,7 +506,6 @@ body {
    Yêu cầu: Dịch vụ chuyển từ 4 cột Desktop -> 2 cột Tablet
    ========================================================================== */
 @media (max-width: 1024px) {
-
   /* HĐ 3: Khu vực Dịch vụ hiển thị 2 cột trên Tablet */
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -520,9 +519,7 @@ body {
    - HĐ 3: Khu vực Dịch vụ chuyển từ 2 cột Tablet -> 1 cột Mobile
    ========================================================================== */
 @media (max-width: 768px) {
-
-  /* 1. HĐ 2: BỐ CỤC TỔNG THỂ: Biến 2 cột Desktop (Sidebar 250px + Main 1fr)
-        thành 1 cột duy nhất xếp chồng theo thứ tự: Header -> Sidebar -> Main -> Footer */
+  /* 1. HĐ 2: BỐ CỤC TỔNG THỂ: Biến 2 cột Desktop thành 1 cột */
   .portfolio-layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr auto;
@@ -533,7 +530,7 @@ body {
       "footer";
   }
 
-  /* 2. HEADER TRÊN MOBILE: Xếp dọc căn giữa, tinh chỉnh padding */
+  /* 2. HEADER TRÊN MOBILE: Xếp dọc căn giữa */
   .header {
     flex-direction: column;
     text-align: center;
@@ -541,9 +538,7 @@ body {
     padding: var(--spacing-lg) var(--spacing-base);
   }
 
-  /* 3. SIDEBAR TRÊN MOBILE: 
-        - Đổi border-right thành border-bottom
-        - Chuyển menu liên kết thành thanh điều hướng nằm ngang gọn đẹp */
+  /* 3. SIDEBAR TRÊN MOBILE: Chuyển menu thành hàng ngang */
   .sidebar {
     border-right: none;
     border-bottom: 1px solid var(--gray-medium);
@@ -566,26 +561,25 @@ body {
     font-size: 0.9rem;
   }
 
-  /* 4. MAIN CONTENT TRÊN MOBILE: Thu gọn khoảng cách đệm (padding) */
+  /* 4. MAIN CONTENT TRÊN MOBILE */
   .main-content {
     padding: var(--spacing-lg) var(--spacing-base);
     gap: var(--spacing-lg);
   }
 
-  /* 5. HĐ 3: KHU VỰC DỊCH VỤ: Chuyển thành 1 cột trên Mobile */
+  /* 5. HĐ 3: KHU VỰC DỊCH VỤ: Chuyển thành 1 cột */
   .services-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-base);
   }
 
-  /* 6. HĐ 2: KHU VỰC LIÊN HỆ: Chuyển bố cục 2 cột Desktop (1fr 1fr)
-        thành 1 cột trên Mobile: Thông tin xếp trên, form gửi tin nhắn xếp dưới */
+  /* 6. HĐ 2: KHU VỰC LIÊN HỆ: Chuyển thành 1 cột */
   .contact-wrapper {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
   }
 
-  /* 7. TINH CHỈNH ĐỆM CARD CHO KHÔNG GIAN HẸP */
+  /* 7. TINH CHỈNH ĐỆM CARD */
   .bio-card,
   .skills-container,
   .services-container,
