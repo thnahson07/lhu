@@ -1,0 +1,343 @@
+/* ==========================================================================
+   1. RESET & BOX MODEL CHUẨN
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Giúp padding/border không làm tăng kích thước phần tử */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #334155;
+  background-color: #f8fafc;
+}
+
+/* ==========================================================================
+   2. PROMPT 1: LAYOUT TỔNG THỂ DÙNG CSS GRID (grid-template-areas)
+   ========================================================================== */
+.portfolio-layout {
+  display: grid;
+  /* Sidebar cố định 250px, Main content chiếm phần còn lại (1fr) */
+  grid-template-columns: 250px 1fr;
+  /* Header tự động theo nội dung, Main dãn hết màn hình, Footer tự động */
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  min-height: 100vh;
+}
+
+/* Gán các khu vực theo grid-template-areas */
+.header {
+  grid-area: header;
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid #3b82f6;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  padding: 30px 20px;
+}
+
+.main-content {
+  grid-area: main;
+  background-color: #f8fafc;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  /* Dùng khoảng cách hiện đại giữa các khối nội dung */
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #1e293b;
+  color: #94a3b8;
+  text-align: center;
+  padding: 16px;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   3. PROMPT 2: KHU VỰC KỸ NĂNG DÙNG FLEXBOX (wrap, gap: 15px, căn giữa)
+   (TUYỆT ĐỐI KHÔNG DÙNG float: left)
+   ========================================================================== */
+.skills-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.skills-title {
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Danh sách kỹ năng dùng Flexbox */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  /* Tự động xuống dòng khi màn hình nhỏ */
+  gap: 15px;
+  /* Khoảng cách giữa các thẻ là 15px hiện đại */
+  justify-content: center;
+  /* Căn giữa các item */
+  align-items: center;
+}
+
+/* Từng thẻ kỹ năng (skill badge) */
+.skill-item {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.skill-item:hover {
+  background: #2563eb;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+/* ==========================================================================
+   4. NỘI DUNG PHỤ TRỢ (SIDEBAR & BIO)
+   ========================================================================== */
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 auto 16px;
+}
+
+.sidebar h3 {
+  text-align: center;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.sidebar .role {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 24px;
+}
+
+.menu-links {
+  list-style: none;
+}
+
+.menu-links li {
+  margin-bottom: 10px;
+}
+
+.menu-links a {
+  display: block;
+  text-decoration: none;
+  color: #475569;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.menu-links a:hover,
+.menu-links a.active {
+  background: #f1f5f9;
+  color: #2563eb;
+}
+
+.bio-card {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  line-height: 1.7;
+}
+
+.bio-card h2 {
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+/* ==========================================================================
+   5. KHU VỰC LIÊN HỆ (CONTACT SECTION) - DÙNG CSS GRID VÀ FLEXBOX
+   ========================================================================== */
+.contact-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.contact-title {
+  font-size: 1.3rem;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.contact-subtitle {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+/* Bố cục Grid 2 cột: Cột 1 là danh sách thông tin, Cột 2 là form tin nhắn */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* Danh sách thẻ thông tin liên hệ dùng Flexbox */
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.contact-card:hover {
+  border-color: #3b82f6;
+  transform: translateX(4px);
+}
+
+.contact-icon {
+  font-size: 1.6rem;
+}
+
+.contact-detail h4 {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.contact-detail p {
+  font-size: 1rem;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Form liên hệ dùng Flexbox */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.btn-submit {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  margin-top: 4px;
+}
+
+.btn-submit:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   6. RESPONSIVE CHO MÀN HÌNH DI ĐỘNG (<= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .portfolio-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  /* Chuyển phần liên hệ thành 1 cột trên điện thoại */
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
