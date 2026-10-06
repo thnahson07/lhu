@@ -1,0 +1,1881 @@
+/* ==========================================================================
+   DESIGN SYSTEM & BẢNG MÃ MÀU THÔNG MINH
+   ========================================================================== */
+:root {
+  /* Hệ thống màu sắc */
+  --primary: #2563eb;
+  --primary-color: var(--primary);
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+
+  --secondary: #8b5cf6;
+  --secondary-color: var(--secondary);
+  --secondary-hover: #7c3aed;
+
+  --bg: #f8fafc;
+  --bg-color: var(--bg);
+  --background: var(--bg);
+
+  --gray-light: #ffffff;
+  --gray-1: var(--gray-light);
+
+  --gray-medium: #e2e8f0;
+  --gray-2: var(--gray-medium);
+
+  --gray-dark: #0f172a;
+  --gray-3: var(--gray-dark);
+
+  --gray-muted: #64748b;
+
+  /* Hệ thống khoảng cách (Spacing) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 28px;
+  --spacing-3xl: 32px;
+  --spacing-4xl: 36px;
+
+  /* Bo góc & Đổ bóng */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(37, 99, 235, 0.12);
+  --shadow-lg: 0 8px 20px rgba(37, 99, 235, 0.2);
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* ==========================================================================
+   1. RESET & BOX MODEL CHUẨN
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--gray-dark);
+  background-color: var(--bg);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. BỐ CỤC TỔNG THỂ DÙNG CSS GRID (grid-template-areas)
+   ========================================================================== */
+.portfolio-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   3. HEADER & KHU VỰC CÔNG CỤ (THEME SWITCH & HAMBURGER MENU)
+   ========================================================================== */
+.header {
+  grid-area: header;
+  background-color: var(--gray-dark);
+  color: var(--gray-light);
+  padding: var(--spacing-base) var(--spacing-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--primary);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.brand-title h1 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  margin-left: auto;
+}
+
+/* --------------------------------------------------------------------------
+   NÚT CHUYỂN ĐỔI CHẾ ĐỘ SÁNG / TỐI (THEME SWITCH - PURE CSS NO JS)
+   -------------------------------------------------------------------------- */
+.theme-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.theme-toggle-box {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch {
+  position: relative;
+  width: 58px;
+  height: 28px;
+  background-color: #334155;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.theme-switch:hover {
+  transform: scale(1.05);
+}
+
+.theme-icon {
+  font-size: 0.8rem;
+  line-height: 1;
+  z-index: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-ball {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   BÀI 5: MODERN HAMBURGER MENU (CSS TRANSITIONS: 3 GẠCH -> "X")
+   -------------------------------------------------------------------------- */
+.hamburger-menu-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.menu-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.hamburger-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  z-index: 105;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.hamburger-btn:hover {
+  transform: scale(1.05);
+}
+
+.hamburger-btn .bar {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--gray-light);
+  border-radius: 3px;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    opacity 0.25s ease,
+    background-color 0.3s ease;
+}
+
+/* Khi mở menu: 3 gạch biến đổi thành "X" */
+.menu-checkbox:checked+.hamburger-btn .bar-top {
+  transform: translateY(9.5px) rotate(45deg);
+  background-color: #38bdf8;
+}
+
+.menu-checkbox:checked+.hamburger-btn .bar-mid {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-checkbox:checked+.hamburger-btn .bar-bot {
+  transform: translateY(-9.5px) rotate(-45deg);
+  background-color: #38bdf8;
+}
+
+/* Dropdown menu */
+.hamburger-nav-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: 240px;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  padding: var(--spacing-sm);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+  z-index: 100;
+}
+
+.menu-checkbox:checked~.hamburger-nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.dropdown-header {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: var(--spacing-xs);
+}
+
+.dropdown-links {
+  list-style: none;
+}
+
+.dropdown-links li {
+  margin-bottom: 2px;
+}
+
+.dropdown-links a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: #f1f5f9;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 8px var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown-links a:hover {
+  background: rgba(37, 99, 235, 0.25);
+  color: #38bdf8;
+  transform: translateX(4px);
+}
+
+.header-status span {
+  display: inline-flex;
+  align-items: center;
+  color: var(--gray-light);
+  border: 1px solid var(--secondary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   4. TÍNH NĂNG DARK MODE (KHI BẬT THEME SWITCH - PURE CSS)
+   ========================================================================== */
+#theme-toggle:checked~.portfolio-layout {
+  --bg: #090d16;
+  --bg-color: #090d16;
+  --background: #090d16;
+
+  --gray-light: #111827;
+  --gray-1: #111827;
+
+  --gray-medium: #1f293d;
+  --gray-2: #1f293d;
+
+  --gray-dark: #f8fafc;
+  --gray-3: #f8fafc;
+
+  --gray-muted: #94a3b8;
+
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Đổi giao diện nút Switch khi bật Dark Mode */
+#theme-toggle:checked~.portfolio-layout .theme-switch {
+  background-color: #0f172a;
+  border-color: #38bdf8;
+}
+
+#theme-toggle:checked~.portfolio-layout .theme-ball {
+  transform: translateX(29px);
+  background: linear-gradient(135deg, #38bdf8, #818cf8);
+}
+
+#theme-toggle:checked~.portfolio-layout .icon-sun {
+  opacity: 0.35;
+  transform: scale(0.85);
+}
+
+#theme-toggle:checked~.portfolio-layout .icon-moon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Giao diện Dark Mode cho các thành phần */
+#theme-toggle:checked~.portfolio-layout .header,
+#theme-toggle:checked~.portfolio-layout .footer {
+  background-color: #06090f;
+  border-color: #1f293d;
+}
+
+#theme-toggle:checked~.portfolio-layout .sidebar {
+  background-color: #0b1120;
+  border-color: #1f293d;
+}
+
+#theme-toggle:checked~.portfolio-layout .sidebar h3 {
+  color: #f8fafc;
+}
+
+#theme-toggle:checked~.portfolio-layout .sidebar .role {
+  color: #94a3b8;
+}
+
+#theme-toggle:checked~.portfolio-layout .menu-links a {
+  color: #cbd5e1;
+}
+
+#theme-toggle:checked~.portfolio-layout .menu-links a:hover,
+#theme-toggle:checked~.portfolio-layout .menu-links a.active {
+  background: #151e30;
+  color: #38bdf8;
+}
+
+#theme-toggle:checked~.portfolio-layout .bio-card,
+#theme-toggle:checked~.portfolio-layout .skills-container,
+#theme-toggle:checked~.portfolio-layout .services-container,
+#theme-toggle:checked~.portfolio-layout .contact-container {
+  background: #0f172a;
+  border-color: #1e293b;
+}
+
+#theme-toggle:checked~.portfolio-layout .bio-card h2,
+#theme-toggle:checked~.portfolio-layout .bio-lead,
+#theme-toggle:checked~.portfolio-layout .bio-card p {
+  color: #f1f5f9;
+}
+
+#theme-toggle:checked~.portfolio-layout .bio-quote {
+  background: #182235;
+  color: #94a3b8;
+  border-color: var(--primary);
+}
+
+#theme-toggle:checked~.portfolio-layout .typing-text-wrapper {
+  background: #151f32;
+  border-color: #1e293b;
+}
+
+#theme-toggle:checked~.portfolio-layout .flip-card-front {
+  background: linear-gradient(160deg, #151f32 0%, #0f172a 100%);
+  border-color: #1e293b;
+}
+
+#theme-toggle:checked~.portfolio-layout .personnel-name {
+  color: #ffffff;
+}
+
+#theme-toggle:checked~.portfolio-layout .personnel-details {
+  background: #090e17;
+  border-color: #1e293b;
+}
+
+#theme-toggle:checked~.portfolio-layout .detail-val {
+  color: #f8fafc;
+}
+
+#theme-toggle:checked~.portfolio-layout .skills-title,
+#theme-toggle:checked~.portfolio-layout .services-title,
+#theme-toggle:checked~.portfolio-layout .contact-title {
+  color: #f8fafc;
+}
+
+#theme-toggle:checked~.portfolio-layout .skill-info {
+  color: #e2e8f0;
+}
+
+#theme-toggle:checked~.portfolio-layout .progress-track {
+  background-color: #1e293b;
+}
+
+#theme-toggle:checked~.portfolio-layout .skill-item {
+  background: #182235;
+  color: #60a5fa;
+  border-color: #243048;
+}
+
+#theme-toggle:checked~.portfolio-layout .service-card,
+#theme-toggle:checked~.portfolio-layout .contact-card {
+  background-color: #151f32;
+  border-color: #1e293b;
+}
+
+#theme-toggle:checked~.portfolio-layout .service-name,
+#theme-toggle:checked~.portfolio-layout .contact-detail p {
+  color: #f8fafc;
+}
+
+#theme-toggle:checked~.portfolio-layout .form-group label {
+  color: #e2e8f0;
+}
+
+#theme-toggle:checked~.portfolio-layout .form-group input,
+#theme-toggle:checked~.portfolio-layout .form-group textarea {
+  background-color: #151f32;
+  color: #f8fafc;
+  border-color: #1e293b;
+}
+
+#theme-toggle:checked~.portfolio-layout .hamburger-nav-dropdown {
+  background: #0b1120;
+  border-color: #1e293b;
+}
+
+/* ==========================================================================
+   5. SIDEBAR: THÔNG TIN CÁ NHÂN & MENU ĐIỀU HƯỚNG
+   ========================================================================== */
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--gray-light);
+  border-right: 1px solid var(--gray-medium);
+  padding: var(--spacing-3xl) var(--spacing-lg);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 auto var(--spacing-base);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  border: 3px solid var(--primary);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  display: block;
+}
+
+.sidebar h3 {
+  text-align: center;
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-xs);
+  font-size: 1.15rem;
+  transition: color 0.3s ease;
+}
+
+.sidebar .role {
+  text-align: center;
+  color: var(--gray-muted);
+  font-size: 0.85rem;
+  margin-bottom: var(--spacing-xl);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.menu-links {
+  list-style: none;
+}
+
+.menu-links li {
+  margin-bottom: var(--spacing-sm);
+}
+
+.menu-links a {
+  display: block;
+  text-decoration: none;
+  color: var(--gray-dark);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.menu-links a:hover,
+.menu-links a.active {
+  background: var(--bg);
+  color: var(--primary);
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   6. MAIN CONTENT
+   ========================================================================== */
+.main-content {
+  grid-area: main;
+  background-color: var(--bg);
+  padding: var(--spacing-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+  transition: background-color 0.3s ease;
+}
+
+/* ==========================================================================
+   BÀI 4: PARALLAX IMAGE BANNER (background-attachment: fixed)
+   ========================================================================== */
+.parallax-banner {
+  min-height: 290px;
+  background-image:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(37, 99, 235, 0.72)),
+    url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80');
+  /* YÊU CẦU BÀI 4: HIỆU ỨNG PARALLAX BẰNG BACKGROUND-ATTACHMENT FIXED */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  max-width: 650px;
+  z-index: 1;
+}
+
+.parallax-badge {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  padding: 5px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.parallax-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.parallax-subtitle {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.btn-parallax {
+  margin-top: var(--spacing-xs);
+  display: inline-block;
+  background: #ffffff;
+  color: var(--primary);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.btn-parallax:hover {
+  transform: translateY(-2px);
+  background: var(--primary-light);
+  color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   BÀI 3: TYPING EFFECT DÙNG CSS THUẦN (KHÔNG DÙNG JS)
+   ========================================================================== */
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.typing-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.typing-badge {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.typing-text-wrapper {
+  display: inline-block;
+  background: var(--gray-light);
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-medium);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.typing-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--primary);
+  font-family: 'Consolas', 'Courier New', Courier, monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  width: 0;
+  animation:
+    typingEffect 4s steps(27, end) 0.5s infinite alternate,
+    caretBlink 0.75s step-end infinite;
+}
+
+@keyframes typingEffect {
+  0% {
+    width: 0;
+  }
+
+  65%,
+  100% {
+    width: 27ch;
+  }
+}
+
+@keyframes caretBlink {
+
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: var(--primary);
+  }
+}
+
+/* ==========================================================================
+   ABOUT GRID & BÀI 2: CARD FLIP EFFECT (THẺ NHÂN SỰ LẬT 180 ĐỘ)
+   ========================================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--spacing-xl);
+  align-items: stretch;
+}
+
+.bio-card {
+  background: var(--gray-light);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-medium);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.bio-card h2 {
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.35rem;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.bio-lead {
+  font-size: 1rem;
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+.bio-card p {
+  color: var(--gray-dark);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  margin-bottom: var(--spacing-sm);
+  transition: color 0.3s ease;
+}
+
+.bio-card strong {
+  color: var(--primary);
+}
+
+.bio-quote {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--bg);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-style: italic;
+  color: var(--gray-muted);
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* BÀI 2: THẺ NHÂN SỰ 3D CARD FLIP */
+.card-flip-wrapper {
+  width: 100%;
+  max-width: 320px;
+  height: 400px;
+  perspective: 1000px;
+  margin: 0 auto;
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+/* KHI HOVER THẺ NHÂN SỰ SẼ LẬT 180 ĐỘ */
+.card-flip-wrapper:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Mặt trước và mặt sau thẻ */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl) var(--spacing-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-medium);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Mặt trước */
+.flip-card-front {
+  background: linear-gradient(160deg, #ffffff 0%, #f8fafc 100%);
+  color: var(--gray-dark);
+}
+
+.card-chip {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.personnel-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  border: 2px solid var(--primary);
+}
+
+.personnel-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  display: block;
+}
+
+.personnel-name {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--gray-dark);
+  transition: color 0.3s ease;
+}
+
+.personnel-position {
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.personnel-details {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-label {
+  color: var(--gray-muted);
+}
+
+.detail-val {
+  color: var(--gray-dark);
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.status-online {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.flip-notice {
+  font-size: 0.78rem;
+  color: var(--gray-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+/* Mặt sau: Lật 180 độ sẵn */
+.flip-card-back {
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+  color: var(--gray-light);
+  transform: rotateY(180deg);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.back-badge {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: rgba(37, 99, 235, 0.25);
+  color: #60a5fa;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.back-avatar-small {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.back-avatar-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  display: block;
+}
+
+.back-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.back-title {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.back-contact-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.back-contact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.b-icon {
+  font-size: 1.05rem;
+}
+
+.b-info label {
+  display: block;
+  font-size: 0.65rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.b-info p {
+  font-size: 0.8rem;
+  color: #f1f5f9;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.back-contact-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.back-contact-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   BÀI 6: KHU VỰC KỸ NĂNG & SKILL BAR ANIMATION (0% ĐẾN GIÁ TRỊ ĐÍCH)
+   ========================================================================== */
+.skills-container {
+  background: var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-medium);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.skills-title {
+  font-size: 1.35rem;
+  color: var(--gray-dark);
+  margin-bottom: 6px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.skills-subtitle {
+  text-align: center;
+  color: var(--gray-muted);
+  font-size: 0.92rem;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.skill-bars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg) var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.skill-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skill-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--gray-dark);
+  transition: color 0.3s ease;
+}
+
+.skill-percentage {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  background-color: var(--gray-medium);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  width: 0%;
+  position: relative;
+  /* HOẠT ẢNH CHẠY TỪ 0% ĐẾN GIÁ TRỊ ĐÍCH KHI TẢI TRANG */
+  animation: runSkillBar 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+  border-radius: var(--radius-full);
+}
+
+@keyframes runSkillBar {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: var(--target-width);
+  }
+}
+
+.skill-html {
+  --target-width: 90%;
+  animation-delay: 0.1s;
+}
+
+.skill-css {
+  --target-width: 85%;
+  animation-delay: 0.25s;
+}
+
+.skill-js {
+  --target-width: 80%;
+  animation-delay: 0.4s;
+}
+
+.skill-grid {
+  --target-width: 95%;
+  animation-delay: 0.55s;
+}
+
+.skill-react {
+  --target-width: 75%;
+  animation-delay: 0.7s;
+}
+
+.skill-design {
+  --target-width: 88%;
+  animation-delay: 0.85s;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  padding-top: var(--spacing-base);
+  border-top: 1px dashed var(--gray-medium);
+}
+
+.skill-item {
+  background: var(--bg);
+  color: var(--primary);
+  border: 1px solid var(--gray-medium);
+  padding: var(--spacing-xs) var(--spacing-base);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.skill-item:hover {
+  background: var(--primary);
+  color: var(--gray-light);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   7. KHU VỰC DỊCH VỤ (SERVICES SECTION)
+   ========================================================================== */
+.services-container {
+  background: var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-medium);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.services-title {
+  font-size: 1.35rem;
+  color: var(--gray-dark);
+  text-align: center;
+  margin-bottom: 6px;
+  transition: color 0.3s ease;
+}
+
+.services-subtitle {
+  text-align: center;
+  color: var(--gray-muted);
+  font-size: 0.92rem;
+  margin-bottom: var(--spacing-xl);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.service-card {
+  background-color: var(--bg);
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg) var(--spacing-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-sm);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.service-icon {
+  font-size: 2.2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.service-name {
+  font-size: 1.05rem;
+  color: var(--gray-dark);
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.service-desc {
+  font-size: 0.88rem;
+  color: var(--gray-muted);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   8. KHU VỰC LIÊN HỆ (CONTACT SECTION)
+   ========================================================================== */
+.contact-container {
+  background: var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-medium);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.contact-title {
+  font-size: 1.35rem;
+  color: var(--gray-dark);
+  text-align: center;
+  margin-bottom: 6px;
+  transition: color 0.3s ease;
+}
+
+.contact-subtitle {
+  text-align: center;
+  color: var(--gray-muted);
+  font-size: 0.92rem;
+  margin-bottom: var(--spacing-xl);
+}
+
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  padding: var(--spacing-base) var(--spacing-lg);
+  background-color: var(--bg);
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.3s ease;
+}
+
+.contact-card:hover {
+  border-color: var(--primary);
+  transform: translateX(4px);
+}
+
+.contact-icon {
+  font-size: 1.6rem;
+}
+
+.contact-detail h4 {
+  font-size: 0.85rem;
+  color: var(--gray-muted);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.contact-detail p {
+  font-size: 0.92rem;
+  color: var(--gray-dark);
+  font-weight: 600;
+  word-break: break-all;
+  transition: color 0.3s ease;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-dark);
+  transition: color 0.3s ease;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--gray-light);
+  color: var(--gray-dark);
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
+}
+
+.btn-submit {
+  background: var(--primary);
+  color: var(--gray-light);
+  border: none;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: var(--spacing-xs);
+}
+
+.btn-submit:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   9. FOOTER
+   ========================================================================== */
+.footer {
+  grid-area: footer;
+  background-color: var(--gray-dark);
+  color: var(--gray-medium);
+  text-align: center;
+  padding: var(--spacing-lg);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--gray-medium);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ==========================================================================
+   BÀI 1: FLOATING ACTION BUTTON (FAB) VỚI PULSE ANIMATION
+   ========================================================================== */
+.fab-contact-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  z-index: 9999;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
+  animation: fabPulse 2s infinite ease-in-out;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.fab-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+}
+
+.fab-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.fab-text {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.fab-pulse-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--primary);
+  animation: fabRing 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+  pointer-events: none;
+}
+
+.fab-pulse-ring.delay {
+  animation-delay: 0.75s;
+}
+
+.fab-contact-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 8px 28px rgba(139, 92, 246, 0.65);
+}
+
+@keyframes fabPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
+  }
+
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
+  }
+}
+
+@keyframes fabRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   MEDIA QUERY CHO TABLET (<= 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-base);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-base);
+  }
+
+  .skill-bars-grid {
+    gap: var(--spacing-base) var(--spacing-lg);
+  }
+}
+
+/* ==========================================================================
+   MEDIA QUERY CHO MOBILE (< 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .portfolio-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+  }
+
+  .header {
+    padding: var(--spacing-sm) var(--spacing-base);
+    gap: var(--spacing-sm);
+  }
+
+  .header-left {
+    gap: var(--spacing-sm);
+  }
+
+  .header-status {
+    display: none;
+  }
+
+  .header-actions {
+    gap: var(--spacing-md);
+    margin-left: auto;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--gray-medium);
+    padding: var(--spacing-xl) var(--spacing-base);
+  }
+
+  .sidebar .menu-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .sidebar .menu-links li {
+    margin-bottom: 0;
+  }
+
+  .sidebar .menu-links a {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.88rem;
+  }
+
+  .main-content {
+    padding: var(--spacing-base);
+    gap: var(--spacing-xl);
+  }
+
+  .parallax-banner {
+    min-height: 230px;
+    padding: var(--spacing-xl) var(--spacing-base);
+  }
+
+  .parallax-title {
+    font-size: 1.4rem;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-flip-wrapper {
+    max-width: 320px;
+  }
+
+  .skill-bars-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-base);
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-base);
+  }
+
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .bio-card,
+  .skills-container,
+  .services-container,
+  .contact-container {
+    padding: var(--spacing-lg) var(--spacing-base);
+  }
+
+  .fab-contact-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .fab-icon {
+    font-size: 1.2rem;
+  }
+
+  .fab-text {
+    font-size: 0.6rem;
+  }
+}
+
+/* ==========================================================================
+   HIỆU ỨNG NGÔI SAO TỎA RA XUNG QUANH AVATAR - THUẦN CSS, KHÔNG DÙNG JS
+   Ngôi sao tỏa ra từ tâm avatar mỗi 2 giây, lặp lại vô tận
+   ========================================================================== */
+
+/* --- CONTAINER BAO NHỪ AVATAR + SAO --- */
+.avatar-star-container {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto var(--spacing-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Avatar trong container không cần margin nữa */
+.avatar-star-container .profile-avatar {
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+}
+
+/* --- VÒNG SÓNG HÀO QUANG TỎA RA MỖI 2 GIÂY --- */
+.avatar-aura-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+  animation: avatarAuraPulse 2s ease-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.avatar-aura-ring.ring-2 {
+  animation-delay: 1s;
+  border-color: var(--secondary, #7c3aed);
+}
+
+@keyframes avatarAuraPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* --- EMITTER CONTAINER - ĐẶT SAO ĐÚY TÂM AVATAR --- */
+.avatar-stars-emitter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* --- BASE STYLE CHO TỪNG NGÔI SAO --- */
+.star-particle {
+  position: absolute;
+  display: block;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  animation: starBurst 2s ease-out infinite;
+  transform-origin: center center;
+}
+
+.star-particle svg {
+  width: 100%;
+  height: 100%;
+  fill: #FFD700;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.8));
+}
+
+/* Sao 5 cánh màu khác */
+.star-top-right svg,
+.star-bottom-left svg,
+.star-sparkle-2 svg {
+  fill: #FF69B4;
+  filter: drop-shadow(0 0 4px rgba(255, 105, 180, 0.8));
+}
+
+.star-top-left svg,
+.star-bottom-right svg {
+  fill: #00E5FF;
+  filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.8));
+}
+
+.star-sparkle-1 svg {
+  fill: #FFAA00;
+  filter: drop-shadow(0 0 4px rgba(255, 170, 0, 0.9));
+}
+
+/* --- ANIMATION NGÔI SAO BAY TỪ TÂM RA NGOÀI --- */
+/* Mỗi ngôi sao có hướng riêng (translateX/Y) + delay khác nhau để tạo hiệu ứng mỗi 2 giây */
+
+@keyframes starBurst {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
+/* Hướng bay của từng ngôi sao (8 hướng + 2 sparkle ngẫu nhiên) */
+.star-top {
+  --tx: 0px;
+  --ty: -65px;
+  --rot: 45deg;
+  animation-delay: 0s;
+}
+
+.star-top-right {
+  --tx: 50px;
+  --ty: -50px;
+  --rot: -30deg;
+  animation-delay: 0.2s;
+}
+
+.star-right {
+  --tx: 65px;
+  --ty: 0px;
+  --rot: 90deg;
+  animation-delay: 0.4s;
+}
+
+.star-bottom-right {
+  --tx: 50px;
+  --ty: 50px;
+  --rot: 135deg;
+  animation-delay: 0.6s;
+}
+
+.star-bottom {
+  --tx: 0px;
+  --ty: 65px;
+  --rot: -45deg;
+  animation-delay: 0.8s;
+}
+
+.star-bottom-left {
+  --tx: -50px;
+  --ty: 50px;
+  --rot: 30deg;
+  animation-delay: 1.0s;
+}
+
+.star-left {
+  --tx: -65px;
+  --ty: 0px;
+  --rot: -90deg;
+  animation-delay: 1.2s;
+}
+
+.star-top-left {
+  --tx: -50px;
+  --ty: -50px;
+  --rot: 60deg;
+  animation-delay: 1.4s;
+}
+
+.star-sparkle-1 {
+  --tx: 30px;
+  --ty: -75px;
+  --rot: 120deg;
+  animation-delay: 1.6s;
+  width: 10px;
+  height: 10px;
+}
+
+.star-sparkle-2 {
+  --tx: -30px;
+  --ty: -75px;
+  --rot: -120deg;
+  animation-delay: 1.8s;
+  width: 10px;
+  height: 10px;
+}
+
+/* --- PERSONNEL CARD AVATAR CONTAINER SIZE NHỎ HƠN --- */
+.personnel-avatar-container {
+  width: 78px;
+  height: 78px;
+  margin: 0 auto var(--spacing-sm);
+}
+
+.personnel-avatar-container .personnel-avatar {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+.personnel-avatar-container .avatar-aura-ring {
+  width: 72px;
+  height: 72px;
+}
+
+.personnel-avatar-container .star-particle {
+  width: 11px;
+  height: 11px;
+}
+
+.personnel-avatar-container .star-sparkle-1,
+.personnel-avatar-container .star-sparkle-2 {
+  width: 8px;
+  height: 8px;
+}
